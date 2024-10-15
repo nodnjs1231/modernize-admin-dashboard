@@ -24,6 +24,7 @@
     "eslint": "8.46.0",
     "eslint-config-next": "13.4.12",
     "lodash": "4.17.21",
+    "modernize-next-free": "file:",
     "next": "14.2.3",
     "next-pwa": "^5.6.0",
     "react": "18.2.0",

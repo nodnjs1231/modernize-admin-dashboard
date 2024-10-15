@@ -67,21 +67,24 @@ if (!self.define) {
     });
   };
 }
-define(['./workbox-e43f5367'], (function (workbox) { 'use strict';
 
-  importScripts();
-  self.skipWaiting();
-  workbox.clientsClaim();
-  workbox.registerRoute("/", new workbox.NetworkFirst({
-    "cacheName": "start-url",
-    plugins: [{
-      cacheWillUpdate: async ({
+/* Workbox */
+// 루트 경로('/')는 NetWorkFirst 전략, 그 외 모든요청은 NetworkOnly 전략.
+// 개발 환경에서 자주 사용하는 설정으로 캐싱으로 인한 문제를 방지하면서 루트 경로에 대해서는 오프라인 지원을 제공함.
+define(['./workbox-e43f5367'], (function (workbox) { 'use strict'; //AMD(Asynchronouse Module Define) 으로 Workbox 모듈 로드
+  importScripts(); // 추가 스크립트 가져오는 함수. but 비어있어 아무작업도 안함.
+  self.skipWaiting(); // 새 서비스 워커가 즉시 활성화 되도록 함.
+  workbox.clientsClaim(); // 활성화 즉시 모든 클라이언트를 제어하도록 함.
+  workbox.registerRoute("/", new workbox.NetworkFirst({ // 특정 경로에 대한 라우트를 등록하는데 NetworkFirst 전략을 사용.
+    "cacheName": "start-url", // 'start-url' 이 라우트에 대한 캐시 이름을 지정.
+    plugins: [{ // 캐시 동작을 수정하는 plugin을 정의함.
+      cacheWillUpdate: async ({ // 응답을 캐시하기 전에 수정할 수 있는 콜백 함수.
         request,
         response,
         event,
         state
       }) => {
-        if (response && response.type === 'opaqueredirect') {
+        if (response && response.type === 'opaqueredirect') { // 'opaqueredirect' 응답을 일반 응답으로 변환하는 로직.
           return new Response(response.body, {
             status: 200,
             statusText: 'OK',
@@ -92,8 +95,8 @@ define(['./workbox-e43f5367'], (function (workbox) { 'use strict';
       }
     }]
   }), 'GET');
-  workbox.registerRoute(/.*/i, new workbox.NetworkOnly({
-    "cacheName": "dev",
+  workbox.registerRoute(/.*/i, new workbox.NetworkOnly({ // 모든경로(/.*/i)에 대해 NetworkOnly 전략을 사용하는 라우트를 등록.
+    "cacheName": "dev", // 이 라우트에 대한 캐시 이름을 dev로 지정.
     plugins: []
   }), 'GET');
 
