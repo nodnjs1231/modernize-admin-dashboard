@@ -1,14 +1,14 @@
 {
-    "name": "Example",
-    "short_name": "Example",
-    "description": "Example App",
+    "name": "Modernize NextJs Admin Template",
+    "short_name": "Modernize Admin",
+    "description": "Modernize NextJs Admin Template by Adminmart",
     "start_url": "/",
     "scope": "/",
     "background_color": "#ffffff",
     "theme_color": "#ffffff",
     "dir" : "ltr",
-    "display": "fullscreen",
-    "orientation": "landscape",
+    "display": "standalone",
+    "orientation": "any",
     "screenshots": [],
     "icons": [
         {
