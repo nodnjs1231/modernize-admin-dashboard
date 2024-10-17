@@ -368,14 +368,16 @@
       integrity="sha384-kenU1KFdBIe4zVF0s0G1M5b4hcpxyD9F7jL+jjXkk+Q2h455rYXK/7HAuoJl+0I4"
       crossorigin="anonymous"
     ></script>
-    <script>
+    <script defer>
+      console.info("테스트");
       if ('serviceWorker' in navigator) {
         window.addEventListener('load', function() {
-          navigator.serviceWorker.register('/sw.js').then(function(registration) {
+          navigator.serviceWorker.register('sw.js')
+          .then(registration => {
             console.log('ServiceWorker registration successful with scope: ', registration.scope);
           }, function(err) {
             console.log('ServiceWorker registration failed: ', err);
-          }).catch(function(err) {
+          }).catch(err => {
             console.log('ServiceWorker registration failed with error: ', err);
           });
         });
